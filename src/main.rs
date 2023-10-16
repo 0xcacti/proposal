@@ -8,6 +8,13 @@ use proposal::proposal::Config;
 #[derive(Debug, Parser)]
 #[command(name="proposal", version=crate_version!(), about="proposal info", long_about = "Get validator proposal information for an epoch", arg_required_else_help(true))]
 struct AppParser {
+    // The RPC URL to use
+    #[arg(
+        long = "The consensus layer rpc url to use",
+        required = false,
+        global = true
+    )]
+    rpc_url: Option<String>,
     /// The subcommand to run
     #[command(subcommand)]
     command: Option<Commands>,
@@ -25,7 +32,7 @@ enum Commands {
     },
 }
 fn main() {
-    let mut config = Config::from(Config::figment()).unwrap();
+    let config = Config::from(Config::figment()).unwrap();
     let app = AppParser::parse();
     match app.command {
         Some(Commands::Get) => {

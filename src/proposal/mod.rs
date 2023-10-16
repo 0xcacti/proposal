@@ -6,12 +6,15 @@ use serde::{Deserialize, Serialize};
 
 pub mod error;
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize)]
-pub struct Config {}
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Config {
+    pub rpc_url: String,
+}
 
 impl Default for Config {
     fn default() -> Self {
-        Self {}
+        let rpc_url = "http://localhost:9933".to_string();
+        Self { rpc_url }
     }
 }
 
